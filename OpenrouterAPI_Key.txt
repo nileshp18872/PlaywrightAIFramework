@@ -1,0 +1,3 @@
+Openrouter with GIT Copilor
+API Key
+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

@@ -1,0 +1,7 @@
+testName,email,password,expected
+Valid Login,nileshp18872@gmail.com,nilesh@123,success
+Invalid Login,neelp18872@gmail.com,neel@123,failure
+Blank Email and Password Login,,,failure
+Blank Password Login,nileshp18872@gmail.com,,failure
+Blank Email Login,,nilesh@123,failure
+

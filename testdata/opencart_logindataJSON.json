@@ -1,0 +1,32 @@
+[
+  {
+    "testName": "Valid Login",
+    "email": "nileshp18872@gmail.com",
+    "password": "nilesh@123",
+    "expected": "success"
+  },
+  {
+    "testName": "Invalid Login",
+    "email": "neelp18872@gmail.com",
+    "password": "neel@123",
+    "expected": "failure"
+  },
+  {
+    "testName": "Blank Email and Password Login",
+    "email": "",
+    "password": "",
+    "expected": "failure"
+  },
+  {
+    "testName": "Blank Password Login",
+    "email": "nileshp18872@gmail.com",
+    "password": "",
+    "expected": "failure"
+  },
+  {
+    "testName": "Blank Email Login",
+    "email": "",
+    "password": "nilesh@123",
+    "expected": "failure"
+  }
+]
