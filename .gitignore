@@ -8,6 +8,7 @@ node_modules/
 
 # Environment & secrets 
 .env
+OpenrouterAPI_Key.txt
 
 #  Playwright test artifacts 
 /test-results/
