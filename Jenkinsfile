@@ -20,8 +20,7 @@ pipeline {
      // Option A: Match your exact Jenkins tool name
         git 'MyGIT' 
         
-        // Keep your NodeJS tool mapping as is
-        nodejs 'NodeJS-Latest' 
+        
   }
   options { timestamps() }
   parameters {
