@@ -28,7 +28,7 @@ pipeline {
     choice(
       name: 'TEST_SUITE',
       choices: [
-        'test', 'test:e2e', 'test:master', 'test:sanity', 'test:regression',
+        'test', 'test:all', 'test:e2e', 'test:master', 'test:sanity', 'test:regression',
         'test:api', 'test:web', 'test:datadriven', 'test:mobile',
         'test:mobile:appium', 'test:mobile:web'
       ],
@@ -69,7 +69,7 @@ pipeline {
 
     stage('📱 Validate Android Appium') {
       when {
-        expression { params.TEST_SUITE in ['test:mobile', 'test:mobile:appium'] }
+        expression { params.TEST_SUITE in ['test', 'test:all', 'test:mobile', 'test:mobile:appium'] }
       }
       steps {
         powershell '''
@@ -102,7 +102,7 @@ pipeline {
         script {
           def suite = params.TEST_SUITE
           def modeFlag = params.MODE == 'headed' ? '--headed' : ''
-          if (suite in ['test:mobile', 'test:mobile:appium']) {
+          if (suite in ['test', 'test:all', 'test:mobile', 'test:mobile:appium']) {
             powershell "npm run ${suite}"
           } else if (suite == 'test:mobile:web') {
             powershell "npm run ${suite} -- ${modeFlag}"
