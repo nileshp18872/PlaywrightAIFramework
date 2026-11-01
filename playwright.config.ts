@@ -30,7 +30,21 @@ export default defineConfig({
   projects: [
     {
       name: 'chromium',
+      testIgnore: [
+        '**/mobile/specs/mobileWEB_end-to-end-shopping-flow.spec.ts',
+        '**/mobile/specs/mobileAPK-api-demos-alarm-service.spec.ts',
+      ],
       use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'iphone-13',
+      testMatch: '**/mobile/specs/mobileWEB_end-to-end-shopping-flow.spec.ts',
+      use: { ...devices['iPhone 13'] },
+    },
+    {
+      name: 'android-appium',
+      testMatch: '**/mobile/specs/mobileAPK-api-demos-alarm-service.spec.ts',
+      timeout: 120_000,
     },
     /*
     {

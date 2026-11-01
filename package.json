@@ -12,6 +12,10 @@
     "test:regression": "playwright test --grep @regression",
     "test:e2e": "playwright test --grep @e2e",
     "test:datadriven": "playwright test --grep @datadriven",
+    "test:mobile": "playwright test tests/mobile/specs --project=iphone-13 --project=android-appium",
+    "test:mobile:appium": "playwright test tests/mobile/specs/mobileAPK-api-demos-alarm-service.spec.ts --project=android-appium",
+    "test:mobile:web": "playwright test tests/mobile/specs/mobileWEB_end-to-end-shopping-flow.spec.ts --project=iphone-13",
+    "appium:server": "appium --address 127.0.0.1 --port 4723",
     "test:master:headed": "playwright test --grep @sanity --headed",
     "test:sanity:debug": "playwright test --grep @sanity --debug"
   },
@@ -22,7 +26,11 @@
   "devDependencies": {
     "@playwright/test": "^1.64.1",
     "@types/node": "^26.6.5",
-    "allure-playwright": "^3.14.0"
+    "allure-playwright": "^3.14.0",
+    "appium": "^3.9.0",
+    "appium-uiautomator2-driver": "^8.7.3",
+    "ts-node": "^10.9.2",
+    "webdriverio": "^10.1.0"
   },
   "dependencies": {
     "@axe-core/playwright": "^4.14.0",
