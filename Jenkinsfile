@@ -73,17 +73,31 @@ pipeline {
       }
       steps {
         powershell '''
-          if (-not $env:ANDROID_APP_PATH) {
-            throw 'Set ANDROID_APP_PATH in the Jenkins agent environment to the absolute APK path.'
+          $appPath = $env:ANDROID_APP_PATH
+          if (-not $appPath -and (Test-Path -LiteralPath '.env' -PathType Leaf)) {
+            $appPathLine = Get-Content -LiteralPath '.env' |
+              Where-Object { $_ -match '^\s*(?:export\s+)?ANDROID_APP_PATH\s*=' } |
+              Select-Object -Last 1
+
+            if ($appPathLine -match '^\s*(?:export\s+)?ANDROID_APP_PATH\s*=\s*(.*?)\s*$') {
+              $appPath = $Matches[1].Trim()
+              if (($appPath.StartsWith("'") -and $appPath.EndsWith("'")) -or
+                  ($appPath.StartsWith('"') -and $appPath.EndsWith('"'))) {
+                $appPath = $appPath.Substring(1, $appPath.Length - 2)
+              }
+            }
           }
-          if (-not (Test-Path -LiteralPath $env:ANDROID_APP_PATH -PathType Leaf)) {
-            throw "APK not found at ANDROID_APP_PATH: $env:ANDROID_APP_PATH"
+          if (-not $appPath) {
+            throw 'Set ANDROID_APP_PATH in the Jenkins agent environment or .env file.'
+          }
+          if (-not (Test-Path -LiteralPath $appPath -PathType Leaf)) {
+            throw 'The APK configured by ANDROID_APP_PATH was not found on the Jenkins agent.'
           }
 
           if (-not (Get-Command adb -ErrorAction SilentlyContinue)) {
             throw 'ADB was not found on PATH. Install Android platform-tools and configure PATH on this Jenkins agent.'
           }
-          $devices = adb devices | Select-Object -Skip 1 | Where-Object { $_ -match '^\\S+\\s+device(\\s|$)' }
+          $devices = adb devices | Select-Object -Skip 1 | Where-Object { $_ -match '^\S+\s+device(\s|$)' }
           if (-not $devices) {
             throw 'No online Android device/emulator found. Start an emulator or connect a device to this Jenkins agent.'
           }
